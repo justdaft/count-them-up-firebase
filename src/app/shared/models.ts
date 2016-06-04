@@ -12,7 +12,7 @@ export interface IPerson {
     theme: number;
     createdAt?: number;
     activities?: any;
-    total: number;
+    total?: number;
 }
 
 export interface IActivityItem {

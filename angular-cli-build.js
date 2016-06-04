@@ -15,7 +15,8 @@ module.exports = function(defaults) {
       'angularfire2/**/*.js',
       'firebase/lib/*.js',
       'lodash/**/*.js',
-      'moment/moment.js'
+      'moment/moment.js',
+       '@angular2-material/**/*'
     ]
   });
 };
