@@ -1,0 +1,19 @@
+<p>
+  dashboard works!
+</p>
+
+<a [routerLink]="[ '/dashboard/people' ]">People</a>
+
+<a [routerLink]="[ '/dashboard/activities' ]">Activities</a>
+
+<div class="grid grid-pad">
+  <div *ngFor="let person of people$ | async" (click)="gotoDetail(person)" class="col-1-4">
+    <a [routerLink]="[ '/dashboard/activities' ]"><div class="module hero" >
+      <h4>{{person.name}}</h4>
+      
+
+    </div> </a>
+  </div>
+</div>
+
+ <router-outlet></router-outlet>

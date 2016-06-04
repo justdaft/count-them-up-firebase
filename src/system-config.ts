@@ -3,10 +3,23 @@
  **********************************************************************************************/
 /** Map relative paths to URLs. */
 const map: any = {
+    'firebase': 'vendor/firebase/lib/firebase-web.js',
+    'angularfire2': 'vendor/angularfire2',
+    '@angular2-material': 'vendor/@angular2-material',
+    'lodash': 'vendor/lodash',
+    'moment': 'vendor/moment/moment.js'
 };
 
 /** User packages configuration. */
 const packages: any = {
+      'lodash': {
+        defaultExtension: 'js',
+        main: 'lodash.min.js'
+    },
+    'angularfire2': {
+        defaultExtension: 'js',
+        main: 'angularfire2.js'
+    }
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,6 +42,9 @@ const barrels: string[] = [
   // App specific barrels.
   'app',
   'app/shared',
+  'app/+people',
+  'app/+activities',
+  'app/+dashboard',
   /** @cli-barrel */
 ];
 
