@@ -1,11 +1,12 @@
-<p>
+<!--<p>
   dashboard works!
 </p>
 
 <a [routerLink]="[ '/dashboard/people' ]">People</a>
 
-<a [routerLink]="[ '/dashboard/activities' ]">Activities</a>
-
+<a [routerLink]="[ '/dashboard/activities' ]">Activities</a>-->
+<md-card>
+<md-card-content>
 <div class="grid grid-pad">
   <div *ngFor="let person of people$ | async" (click)="announcePersonSelected(person)" (click)="gotoDetail(person.name)" class="col-1-4">
 
@@ -15,6 +16,9 @@
 
   </div>
 </div>
+</md-card-content>
+</md-card>
+
 <app-activities></app-activities>
 <!--<div class="grid grid-pad">
   <div *ngFor="let person of people$ | async" (click)="announcePersonSelected(person)" (click)="gotoDetail(person.name)" class="col-1-4">
@@ -36,4 +40,4 @@
       <li *ngFor="let event of history">{{event}}</li>
     </ul>-->
     
-<router-outlet></router-outlet>
+<!--<router-outlet></router-outlet>-->

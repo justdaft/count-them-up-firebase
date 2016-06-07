@@ -1,0 +1,29 @@
+.act {
+    color: white;
+    border-radius: 25px;
+    font-size: 150%;
+    width: 280px
+}
+
+.cnter {
+        display: flex;
+    position: absolute;
+
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    padding: 0;
+    margin: 0;
+}
+
+.example-fill-remaining-space {
+  // This fills the remaining space, by using flexbox.  
+  // Every toolbar row uses a flexbox row layout. 
+  flex: 1 1 auto;
+}

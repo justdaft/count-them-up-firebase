@@ -108,6 +108,7 @@ const barrels: string[] = [
   'app/missioncontrol',
   'app/mission-control',
   'app/astronaut',
+  'app/update-activities',
   /** @cli-barrel */
 ];
 
