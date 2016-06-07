@@ -6,3 +6,6 @@ import { BackendService } from './backend.service';
 export const BACKEND_PROVIDERS: any[] = [
 	BackendService
 ];
+
+
+export * from './mission.service';

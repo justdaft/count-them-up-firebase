@@ -5,12 +5,16 @@ import { Person } from './person';
 import { Activity } from './activity';
 import { TypeItem } from './type-item';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject }    from 'rxjs/Subject';
+import * as moment from 'moment';
 
 @Injectable()
 export class BackendService {
 	activityItems$: FirebaseListObservable<IActivityItem[]>;
 	people$: FirebaseListObservable<IPerson[]>;
 	nameSubject: BehaviorSubject<any>;
+	selectedPerson = '';
+	startOfWeek = moment().startOf('isoWeek').format('DDMMYYYY');
 
 	constructor(public af: AngularFire) {
 		this.activityItems$ = af.list(`/activities`) as FirebaseListObservable<IActivityItem[]>;
@@ -23,14 +27,33 @@ export class BackendService {
 		this.nameSubject.next(name);
 	};
 
-
 	createPerson(person: IPerson): Promise<any> {
 		return this.af.database.list(`/activities`).push(new Person(person));
 	}
 
+	announceSelectedPerson(person: IPerson) {
+		this.selectedPersonAnnouncedSource.next(person);
+	}
+	confirmSelectedPerson(person: IPerson) {
+		this.selectedPersonConfirmedSource.next(person);
+	}
+
+	private selectedPersonAnnouncedSource = new Subject<IPerson>();
+	private selectedPersonConfirmedSource = new Subject<IPerson>();
+	// Observable string streams
+	selectedPersonAnnounced$ = this.selectedPersonAnnouncedSource.asObservable();
+	selectedPersonConfirmed$ = this.selectedPersonConfirmedSource.asObservable();
+	// // Service message commands
+	// announceMission(mission: string) {
+	// 	this.missionAnnouncedSource.next(mission)
+	// }
+	// confirmMission(astronaut: string) {
+	// 	this.missionConfirmedSource.next(astronaut);
+	// }
+
 	createActivity(name: string, result: boolean, type: string): Promise<any> {
 		let path = `/activities/` + name + `/` + type;
-		return this.af.database.list(path).push(new 
+		return this.af.database.list(path).push(new
 			Activity(type, result));
 		// return this.activityItems$.push(new Activity(name, title, result));
 	}
@@ -52,6 +75,18 @@ export class BackendService {
 			// Increment readCount by 1, or set to 1 if it was undefined before.
 			return current = total;
 		});
+	}
+
+	currentActivities() {
+		console.log('currentActivities: ', this.selectedPerson);
+		let path = `/activities/` + this.selectedPerson;
+		return this.af.database.list(path);
+	}
+
+	filteredActivities() {
+		console.log('filteredActivities: ', this.nameSubject.value);
+		let path = `/activities/` + this.nameSubject.value;
+		return this.af.database.list(path);
 	}
 
 	updateActivity(path, change: number) {

@@ -7,13 +7,33 @@
 <a [routerLink]="[ '/dashboard/activities' ]">Activities</a>
 
 <div class="grid grid-pad">
-  <div *ngFor="let person of people$ | async" (click)="gotoDetail(person)" class="col-1-4">
-    <a [routerLink]="[ '/dashboard/activities' ]"><div class="module hero" >
-      <h4>{{person.name}}</h4>
-      
+  <div *ngFor="let person of people$ | async" (click)="announcePersonSelected(person)" (click)="gotoDetail(person.name)" class="col-1-4">
 
-    </div> </a>
+      <div class="module hero">
+        <h4>{{person.name}}</h4>
+      </div>
+
   </div>
 </div>
+<app-activities></app-activities>
+<!--<div class="grid grid-pad">
+  <div *ngFor="let person of people$ | async" (click)="announcePersonSelected(person)" (click)="gotoDetail(person.name)" class="col-1-4">
+    <a [routerLink]="[ '/dashboard/activities' ]">
+      <div class="module hero">
+        <h4>{{person.name}}</h4>
+      </div>
+      </a>
+  </div>
+</div>-->
 
- <router-outlet></router-outlet>
+    <!--<h2>Mission Control</h2>
+    <button (click)="announce()">Announce mission</button>
+    <app-astronaut *ngFor="let astronaut of astronauts"
+      [astronaut]="astronaut">
+    </app-astronaut>
+    <h3>History</h3>
+    <ul>
+      <li *ngFor="let event of history">{{event}}</li>
+    </ul>-->
+    
+<router-outlet></router-outlet>

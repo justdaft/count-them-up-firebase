@@ -1,3 +1,9 @@
 <p>
   activities works!
 </p>
+<ul>
+  <li *ngFor="let activity of activities$ | async">
+    
+    {{activity | json}}
+  </li>
+</ul>
