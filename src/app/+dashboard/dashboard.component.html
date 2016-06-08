@@ -1,43 +1,34 @@
-<!--<p>
-  dashboard works!
-</p>
-
-<a [routerLink]="[ '/dashboard/people' ]">People</a>
-
-<a [routerLink]="[ '/dashboard/activities' ]">Activities</a>-->
-<md-card>
-<md-card-content>
-<div class="grid grid-pad">
-  <div *ngFor="let person of people$ | async" (click)="announcePersonSelected(person)" (click)="gotoDetail(person.name)" class="col-1-4">
-
-      <div class="module hero">
-        <h4>{{person.name}}</h4>
+<md-sidenav-layout class="demo-root" fullscreen>
+  <md-sidenav #start>
+    <md-nav-list>
+      <a md-list-item [routerLink]="[ '/dashboard/people' ]" (click)="start.close()">People</a>
+      <a md-list-item [routerLink]="[ '/dashboard/activities' ]" (click)="start.close()" >Activities</a>
+      <hr>
+      <a md-list-item [routerLink]="['baseline']">Baseline</a>
+    </md-nav-list>
+    <button md-button (click)="start.close()">CLOSE</button>
+  </md-sidenav>
+  <div>
+    <md-toolbar color="primary">
+      <button md-icon-button (click)="start.open()">
+        <md-icon class="md-24" >menu</md-icon>
+      </button>
+      <div class="demo-toolbar">
+        <h1>Count them up!</h1>
+        <button md-button >
+        </button>
       </div>
+    </md-toolbar>
 
+    <div class="demo-content">
+      <router-outlet></router-outlet>
+    </div>
   </div>
-</div>
-</md-card-content>
-</md-card>
+</md-sidenav-layout>   
 
-<app-activities></app-activities>
-<!--<div class="grid grid-pad">
-  <div *ngFor="let person of people$ | async" (click)="announcePersonSelected(person)" (click)="gotoDetail(person.name)" class="col-1-4">
-    <a [routerLink]="[ '/dashboard/activities' ]">
-      <div class="module hero">
-        <h4>{{person.name}}</h4>
-      </div>
-      </a>
-  </div>
-</div>-->
+<!--<a [routerLink]="[ '/dashboard/people' ]">People</a>
 
-    <!--<h2>Mission Control</h2>
-    <button (click)="announce()">Announce mission</button>
-    <app-astronaut *ngFor="let astronaut of astronauts"
-      [astronaut]="astronaut">
-    </app-astronaut>
-    <h3>History</h3>
-    <ul>
-      <li *ngFor="let event of history">{{event}}</li>
-    </ul>-->
+<a [routerLink]="[ '/dashboard/activities' ]">Activities</a>
+
     
-<!--<router-outlet></router-outlet>-->
+<router-outlet></router-outlet>-->

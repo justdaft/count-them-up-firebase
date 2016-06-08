@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy } from '@angular/core';
 import { BackendService, IPerson} from '../shared';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { Subscription }   from 'rxjs/Subscription';
-import { UpdateActivitiesComponent } from '../update-activities';
+
 import * as moment from 'moment';
 import {MdButton} from '@angular2-material/button';
 import {MdCheckbox} from '@angular2-material/checkbox';
@@ -21,18 +21,17 @@ import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
   templateUrl: 'activities.component.html',
   styleUrls: ['activities.component.css'],
   providers: [MdRadioDispatcher, MdIconRegistry],
-	directives: [
-    UpdateActivitiesComponent,
-		MD_CARD_DIRECTIVES,
-		MdButton,
-		MdCheckbox,
-		MdRadioButton,
-		MdSpinner,
-		MD_INPUT_DIRECTIVES,
-		MD_LIST_DIRECTIVES,
-		MdProgressBar,
-		MdIcon
-	]
+  directives: [
+    MD_CARD_DIRECTIVES,
+    MdButton,
+    MdCheckbox,
+    MdRadioButton,
+    MdSpinner,
+    MD_INPUT_DIRECTIVES,
+    MD_LIST_DIRECTIVES,
+    MdProgressBar,
+    MdIcon
+  ]
 })
 export class ActivitiesComponent {
   activities$: FirebaseListObservable<any[]>;
@@ -46,14 +45,17 @@ export class ActivitiesComponent {
   subscription: Subscription;
   // startOfWeek = moment().startOf('isoWeek').format('DDMMYYYY');
   thisWeek: string = `Week ` + moment().isoWeek() + ` of ` + moment().year();
-colors: Array<string> = ['red', 'blue', 'green', 'orange', 'pink', 'gold', 'purple', 'grey'];
-
+  colors: Array<string> = ['red', 'blue', 'green', 'orange', 'pink', 'gold', 'purple', 'grey'];
+  people$: FirebaseListObservable<any[]>;
   // this.history.push(`Mission "${mission}" announced`);
+currentPerson: IPerson;
 
   constructor(private backendService: BackendService, public af: AngularFire) {
+    this.people$ = backendService.people$;
     this.subscription = backendService.selectedPersonAnnounced$.subscribe(
       person => {
         this.person = person;
+        this.currentPerson = person;
         let path = `/activities/${person.name}/${this.startOfWeek}`;
         this.activities$ = this.af.database.list(path);
 
@@ -81,6 +83,12 @@ colors: Array<string> = ['red', 'blue', 'green', 'orange', 'pink', 'gold', 'purp
         this.announced = true;
         this.confirmed = false;
       })
+  }
+
+  announcePersonSelected(person: IPerson) {
+    this.backendService.announceSelectedPerson(person);
+    // this.history.push(`Person "${person.name}" selected`);
+    // if (this.nextMission >= this.missions.length) { this.nextMission = 0; }
   }
 
   confirm() {
