@@ -89,7 +89,7 @@ export class BackendService {
 		return this.af.database.list(path);
 	}
 
-	updateActivity(path, change: number) {
+	updateActivity(path: string, change: number) {
 		// let path = `/activities/` + name + `/` + startOfWeek + `/` + activity;
 		let ref = new Firebase(`https://count-them-up.firebaseio.com/` + path);
 		// ref.transaction(x => x + change);

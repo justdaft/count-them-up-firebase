@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy } from '@angular/core';
 import { BackendService, IPerson} from '../shared';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { Subscription }   from 'rxjs/Subscription';
+import { Subject }    from 'rxjs/Subject';
 
 import * as moment from 'moment';
 import {MdButton} from '@angular2-material/button';
@@ -37,18 +38,16 @@ export class ActivitiesComponent {
   activities$: FirebaseListObservable<any[]>;
   startOfWeek = moment().startOf('isoWeek').format('DDMMYYYY');
   resultsArray: Array<any> = [];
-  // @Input() person: IPerson;
   person: IPerson;
   activities: any = `<no activities>`;
-  confirmed = false;
-  announced = false;
   subscription: Subscription;
   // startOfWeek = moment().startOf('isoWeek').format('DDMMYYYY');
   thisWeek: string = `Week ` + moment().isoWeek() + ` of ` + moment().year();
   colors: Array<string> = ['red', 'blue', 'green', 'orange', 'pink', 'gold', 'purple', 'grey'];
   people$: FirebaseListObservable<any[]>;
   // this.history.push(`Mission "${mission}" announced`);
-currentPerson: IPerson;
+  currentPerson: IPerson;
+  valueChange = new Subject<any>();
 
   constructor(private backendService: BackendService, public af: AngularFire) {
     this.people$ = backendService.people$;
@@ -80,10 +79,23 @@ currentPerson: IPerson;
           this.resultsArray.push(obj);
         });
         console.log('results: ', this.resultsArray)
-        this.announced = true;
-        this.confirmed = false;
       })
+
+    this.valueChange.subscribe(x => {
+      console.log(x)
+      let path = `/activities/` + this.currentPerson.name + `/` + this.startOfWeek + `/` + x.activity;
+      this.backendService.updateActivity(path, x.value)
+    });
   }
+
+  updateActivity(activity: string, value: number) {
+    this.valueChange.next({
+      activity: activity,
+      value: value
+    });
+  };
+
+
 
   announcePersonSelected(person: IPerson) {
     this.backendService.announceSelectedPerson(person);
@@ -91,10 +103,7 @@ currentPerson: IPerson;
     // if (this.nextMission >= this.missions.length) { this.nextMission = 0; }
   }
 
-  confirm() {
-    this.confirmed = true;
-    this.backendService.confirmSelectedPerson(this.person);
-  }
+
   ngOnDestroy() {
     // prevent memory leak when component destroyed
     this.subscription.unsubscribe();

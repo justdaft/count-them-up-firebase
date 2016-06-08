@@ -1,12 +1,20 @@
 <md-sidenav-layout class="demo-root" fullscreen>
   <md-sidenav #start>
     <md-nav-list>
-      <a md-list-item [routerLink]="[ '/dashboard/people' ]" (click)="start.close()">People</a>
-      <a md-list-item [routerLink]="[ '/dashboard/activities' ]" (click)="start.close()" >Activities</a>
+      <a md-list-item [routerLink]="[ '/dashboard/people' ]" (click)="start.close()">
+        <md-icon md-list-icon>folder</md-icon>
+        <span md-line>People</span>
+        <span md-line class="demo-secondary-text"> Description </span>
+      </a>
+      <a md-list-item [routerLink]="[ '/dashboard/activities' ]" (click)="start.close()">
+        <md-icon md-list-icon>folder</md-icon>
+        <span md-line>Activities</span>
+        <span md-line class="demo-secondary-text"> Description </span>
+      </a>
       <hr>
-      <a md-list-item [routerLink]="['baseline']">Baseline</a>
+      <!--<a md-list-item [routerLink]="['baseline']">Baseline</a>-->
     </md-nav-list>
-    <button md-button (click)="start.close()">CLOSE</button>
+    <!--<button md-button (click)="start.close()">CLOSE</button>-->
   </md-sidenav>
   <div>
     <md-toolbar color="primary">
@@ -15,7 +23,7 @@
       </button>
       <div class="demo-toolbar">
         <h1>Count them up!</h1>
-        <button md-button >
+        <button md-button>
         </button>
       </div>
     </md-toolbar>
@@ -24,11 +32,4 @@
       <router-outlet></router-outlet>
     </div>
   </div>
-</md-sidenav-layout>   
-
-<!--<a [routerLink]="[ '/dashboard/people' ]">People</a>
-
-<a [routerLink]="[ '/dashboard/activities' ]">Activities</a>
-
-    
-<router-outlet></router-outlet>-->
+</md-sidenav-layout>
